@@ -25,6 +25,9 @@ static CODESTR: &str = "[38;2;94;153;73m/// Comment
 
 #[no_mangle]
 pub extern "C" fn framebuffer_draw() {
+    static mut POS: i32 = 0;
+    static mut INCREASING: bool = true;
+
     let display = unsafe { &mut FRAME };
 
     let _top_left = Point::new(0, 0);
@@ -36,7 +39,27 @@ pub extern "C" fn framebuffer_draw() {
     let rect_height = 60;
 
     // Draw a couple of shapes to test for color/geometry
-    Circle::new(Point::new(center_x - 20, 0), 40)
+    Circle::new(Point::new(center_x - 20, unsafe { POS }), 40)
+        .into_styled(PrimitiveStyle::with_fill(Rgb565::BLACK))
+        .draw(display)
+        .unwrap();
+
+    unsafe {
+        if INCREASING {
+            POS += 1;
+            if POS == 239 {
+                INCREASING = false;
+            }
+        } else {
+            POS -= 1;
+            if POS == 0 {
+                INCREASING = true;
+            }
+        }
+    }
+
+    // Draw a couple of shapes to test for color/geometry
+    Circle::new(Point::new(center_x - 20, unsafe { POS }), 40)
         .into_styled(PrimitiveStyle::with_fill(Rgb565::CSS_PURPLE))
         .draw(display)
         .unwrap();

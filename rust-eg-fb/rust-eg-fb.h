@@ -15,4 +15,4 @@ extern struct framebuffer FRAME;
 
 void framebuffer_draw(void);
 
-uint8_t *framebuffer_get_raw_pointer(void);
+uint16_t *framebuffer_get_raw_pointer(void);
