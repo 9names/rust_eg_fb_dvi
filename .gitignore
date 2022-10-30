@@ -1,0 +1,4 @@
+build
+*.swp
+rust-eg-fb/target
+rust-eg-fb/Cargo.lock
