@@ -38,7 +38,7 @@ void core1_scanline_callback() {
 		// wait
 	}
 	// Note first two scanlines are pushed before DVI start
-	static usize_t scanline = 2;
+	static size_t scanline = 2;
 	bufptr = (uint16_t*)&framebuffer_ptr[FRAME_WIDTH * scanline];
 	queue_add_blocking_u32(&dvi0.q_colour_valid, &bufptr);
 	scanline = (scanline + 1) % FRAME_HEIGHT;
